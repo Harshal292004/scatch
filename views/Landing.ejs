@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCATH - Welcome</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: 'var(--color-primary)',
+                        secondary: 'var(--color-secondary)',
+                        accent: 'var(--color-accent)',
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        :root {
+            --color-primary: #18181b;
+            --color-secondary: #27272a;
+            --color-accent: #3b82f6;
+        }
+        .light-theme {
+            --color-primary: #f4f4f5;
+            --color-secondary: #e4e4e7;
+            --color-accent: #3b82f6;
+        }
+    </style>
+</head>
+<body class="bg-primary text-white min-h-screen transition-colors duration-300">
+    <nav class="fixed top-0 left-0 right-0 bg-secondary shadow-md z-10">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="text-accent font-bold italic text-2xl tracking-tighter">SCATH</div>
+                <div class="flex space-x-4">
+                    <button id="user-login" class="bg-accent hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded transition duration-300">
+                        User
+                    </button>
+                    <button id="admin-login" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded transition duration-300">
+                        Admin
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="pt-20 flex items-center justify-center min-h-screen">
+        <!-- Your main content goes here -->
+        <h1 class="text-4xl font-bold">Welcome to SCATH</h1>
+    </div>
+    <button id="themeToggle" class="fixed bottom-4 right-4 p-2 rounded-full bg-accent text-white hover:bg-blue-600 transition duration-300">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+        </svg>
+    </button>
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        const userLogin = document.getElementById('user-login');
+        const adminLogin = document.getElementById('admin-login');
+
+        userLogin.addEventListener("click", () => {
+            window.location.href = '/users/login';
+        });
+
+        adminLogin.addEventListener("click", () => {
+            window.location.href = '/owners/login';
+        });
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('light-theme');
+        });
+    </script>
+</body>
+</html>

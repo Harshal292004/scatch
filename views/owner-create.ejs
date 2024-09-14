@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: 'var(--color-primary)',
+                        secondary: 'var(--color-secondary)',
+                        accent: 'var(--color-accent)',
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        :root {
+            --color-primary: #18181b;
+            --color-secondary: #27272a;
+            --color-accent: #3b82f6;
+        }
+        .light-theme {
+            --color-primary: #f4f4f5;
+            --color-secondary: #e4e4e7;
+            --color-accent: #3b82f6;
+        }
+    </style>
+</head>
+<body class="bg-primary text-white flex items-center justify-center min-h-screen transition-colors duration-300">
+    
+    <button id="themeToggle" class="fixed top-4 right-4 p-2 rounded-full bg-accent text-white">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+        </svg>
+    </button>
+    
+    <div class="w-full max-w-[75vw] p-8 space-y-6 bg-secondary rounded-xl shadow-lg">
+        <div class="flex justify-between items-center">
+            <h2 class="text-3xl font-bold text-center mx-auto">Create an Owner Account</h2>
+        </div>
+        <form action="/owners/create" method="post" class="space-y-4">
+            
+            <div>
+                <input type="text" name="shopname" placeholder="Shop Name" class="w-full px-4 py-3 rounded-lg bg-primary text-inherit placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-accent">
+            </div>
+            <div>
+                <input type="text" name="ownername" placeholder="Owner Name" class="w-full px-4 py-3 rounded-lg bg-primary text-inherit placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-accent">
+            </div>
+            <div>
+                <input type="email" name="email" placeholder="Email" class="w-full px-4 py-3 rounded-lg bg-primary text-inherit placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-accent">
+            </div>
+            <div>
+                <input type="password" name="password" placeholder="Password" class="w-full px-4 py-3 rounded-lg bg-primary text-inherit placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-accent">
+            </div>
+            <div>
+                <input type="number" name="contact" placeholder="Contact Number" class="w-full px-4 py-3 rounded-lg bg-primary text-inherit placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-accent">
+            </div>
+            
+            <!-- Address Fields -->
+            <div class="flex flex-row flex-wrap gap-3">
+                <div>
+                    <input type="text" name="address[street]" placeholder="Street Address" class="w-full px-4 py-3 rounded-lg bg-primary text-inherit placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-accent">
+                </div>
+                <div>
+                    <input type="text" name="address[city]" placeholder="City" class="w-full px-4 py-3 rounded-lg bg-primary text-inherit placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-accent">
+                </div>
+                <div>
+                    <input type="text" name="address[state]" placeholder="State" class="w-full px-4 py-3 rounded-lg bg-primary text-inherit placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-accent">
+                </div>
+                <div>
+                    <input type="text" name="address[postalCode]" placeholder="Postal Code" class="w-full px-4 py-3 rounded-lg bg-primary text-inherit placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-accent">
+                </div>
+                <div>
+                    <input type="text" name="address[country]" placeholder="Country" class="w-full px-4 py-3 rounded-lg bg-primary text-inherit placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-accent">
+                </div>
+            </div>
+            
+            <div>
+                <input type="text" name="gstin" placeholder="GSTIN" class="w-full px-4 py-3 rounded-lg bg-primary text-inherit placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-accent">
+            </div>
+            <div>
+                <input type="submit" value="Create Account" class="w-full py-3 text-white bg-accent rounded-lg cursor-pointer hover:opacity-90 transition duration-300">
+            </div>
+            <div class="text-center">
+                Already have an account? <a href="/owners/login" class="text-zinc-400 hover:text-accent transition duration-300">Login</a>
+            </div>
+        </form>
+    </div>
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('light-theme');
+        });
+    </script>
+</body>
+</html>

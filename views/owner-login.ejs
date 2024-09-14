@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: 'var(--color-primary)',
+                        secondary: 'var(--color-secondary)',
+                        accent: 'var(--color-accent)',
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        :root {
+            --color-primary: #18181b;
+            --color-secondary: #27272a;
+            --color-accent: #3b82f6;
+        }
+        .light-theme {
+            --color-primary: #ffffff;
+            --color-secondary: #909090;
+            --color-accent: #ffae00;
+        }
+    </style>
+</head>
+<body class="bg-primary text-white flex items-center justify-center min-h-screen transition-colors duration-300">
+    
+    <button id="themeToggle" class="fixed top-4 right-4 p-2 rounded-full bg-accent text-white">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+        </svg>
+    </button>
+    
+    <div class="w-full max-w-[75vw] p-8 space-y-6 bg-secondary rounded-xl shadow-lg">
+        <div class="flex justify-between items-center">
+            <h2 class="text-3xl font-bold text-center mx-auto">Login as Owner</h2>
+        </div>
+        <form action="/create" method="post" class="space-y-4">
+            
+            <div>
+                <input type="email" name="email" placeholder="Email" class="w-full px-4 py-3 rounded-lg bg-primary text-inherit placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-accent">
+            </div>
+            <div>
+                <input type="password" name="password" placeholder="Password" class="w-full px-4 py-3 rounded-lg bg-primary text-inherit placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-accent">
+            </div>   
+            
+            <div class="text-center felx felx-col gap-2 p-4">
+                <p class="mb-2">Not a Owner? <a href="/users/login" class="text-zinc-400 hover:text-accent transition duration-300">Login as a User</a></p>
+                <span >OR</span>
+                <p class="mt-2">Don't have a account?<a href="/owners/create" class="text-zinc-400 hover:text-accent transition duration-300">Create a Owner account</a></p>
+            </div>
+        </form>
+    </div>
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('light-theme');
+        });
+    </script>
+</body>
+</html>

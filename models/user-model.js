@@ -27,10 +27,6 @@ const userSchema = mongoose.Schema({
         type: Number,
         required: true
     },
-    isAdmin: {
-        type: Boolean,
-        default: false
-    },
     address: [
         {
             street: String,

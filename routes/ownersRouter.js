@@ -3,6 +3,7 @@ const router= express.Router()
 const ownerModel= require('../models/owner-model')
 const jwt= require('jsonwebtoken')
 const bcrypt= require('bcrypt')
+const {createdOwner}=require('../controllers/ownerAuthController')
 
 router.get("/",function(req,res){
     res.send("hey its working ")
@@ -29,8 +30,7 @@ if(process.env.NODE_ENV==="development"){
     })
     
   
-    router.post("/create",async function(req,res){
-    })
+    router.post("/create",createdOwner)
 }
 
 

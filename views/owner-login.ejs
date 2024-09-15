@@ -44,7 +44,7 @@
         <div class="flex justify-between items-center">
             <h2 class="text-3xl font-bold text-center mx-auto">Login as Owner</h2>
         </div>
-        <form action="/create" method="post" class="space-y-4">
+        <form action="/owners/login" method="post" class="space-y-4">
             
             <div>
                 <input type="email" name="email" placeholder="Email" class="w-full px-4 py-3 rounded-lg bg-primary text-inherit placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-accent">
@@ -52,13 +52,14 @@
             <div>
                 <input type="password" name="password" placeholder="Password" class="w-full px-4 py-3 rounded-lg bg-primary text-inherit placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-accent">
             </div>   
-            
-            <div class="text-center felx felx-col gap-2 p-4">
-                <p class="mb-2">Not a Owner? <a href="/users/login" class="text-zinc-400 hover:text-accent transition duration-300">Login as a User</a></p>
-                <span >OR</span>
-                <p class="mt-2">Don't have a account?<a href="/owners/create" class="text-zinc-400 hover:text-accent transition duration-300">Create a Owner account</a></p>
-            </div>
+
+            <div>
+                <input type="submit" value="Login" class="w-full px-4 py-3 rounded-lg bg-accent text-primary  focus:outline-none focus:ring-2 focus:ring-accent">
+            </div>   
         </form>
+        <div class="text-center felx felx-col gap-2 p-4">
+            <p class="mt-2">Don't have a account?<a href="/owners/create" class="text-zinc-400 hover:text-accent transition duration-300">Create a Owner account</a></p>
+        </div>
     </div>
     <script>
         const themeToggle = document.getElementById('themeToggle');

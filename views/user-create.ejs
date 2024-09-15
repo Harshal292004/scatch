@@ -26,9 +26,9 @@
             --color-accent: #3b82f6;
         }
         .light-theme {
-            --color-primary: #ffffff;
-            --color-secondary: #909090;
-            --color-accent: #ffae00;
+            --color-primary: #f4f4f5;
+            --color-secondary: #e4e4e7;
+            --color-accent: #3b82f6;
         }
     </style>
 </head>
@@ -42,24 +42,46 @@
     
     <div class="w-full max-w-[75vw] p-8 space-y-6 bg-secondary rounded-xl shadow-lg">
         <div class="flex justify-between items-center">
-            <h2 class="text-3xl font-bold text-center mx-auto">Login as User</h2>
+            <h2 class="text-3xl font-bold text-center mx-auto">Create a User Account</h2>
         </div>
-        <form action="/users/login" method="post" class="space-y-4">
+        <form action="/users/create" method="post" class="space-y-4">
             
+            <div>
+                <input type="text" name="username" placeholder="Username" class="w-full px-4 py-3 rounded-lg bg-primary text-inherit placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-accent">
+            </div>
+            <div>
+                <input type="text" name="fullName" placeholder="Full Name" class="w-full px-4 py-3 rounded-lg bg-primary text-inherit placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-accent">
+            </div>
+            <div>
+                <input type="number" name="age" placeholder="Age" class="w-full px-4 py-3 rounded-lg bg-primary text-inherit placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-accent">
+            </div>
             <div>
                 <input type="email" name="email" placeholder="Email" class="w-full px-4 py-3 rounded-lg bg-primary text-inherit placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-accent">
             </div>
             <div>
                 <input type="password" name="password" placeholder="Password" class="w-full px-4 py-3 rounded-lg bg-primary text-inherit placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-accent">
-            </div>   
-
+            </div>
             <div>
-                <input type="submit" value="Login" class="w-full px-4 py-3 rounded-lg bg-accent text-primary  focus:outline-none focus:ring-2 focus:ring-accent">
-            </div>   
+                <input type="tel" name="contact" placeholder="Contact Number" class="w-full px-4 py-3 rounded-lg bg-primary text-inherit placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-accent">
+            </div>
+            <div class="flex justify-center space-x-4">
+                <label class="flex items-center">
+                    <input type="radio" name="gender" value="M" class="mr-2">
+                    <span>Male</span>
+                </label>
+                <label class="flex items-center">
+                    <input type="radio" name="gender" value="F" class="mr-2">
+                    <span>Female</span>
+                </label>
+            </div>
+            
+            <div>
+                <input type="submit" value="Create Account" class="w-full py-3 text-white bg-accent rounded-lg cursor-pointer hover:opacity-90 transition duration-300">
+            </div>
+            <div class="text-center">
+                Already have an account? <a href="/users/login" class="text-zinc-400 hover:text-accent transition duration-300">Login</a>
+            </div>
         </form>
-        <div class="text-center felx felx-col gap-2 p-4">
-            <p class="mt-2">Don't have a account?<a href="/users/create" class="text-zinc-400 hover:text-accent transition duration-300">Create a User account</a></p>
-        </div>
     </div>
     <script>
         const themeToggle = document.getElementById('themeToggle');

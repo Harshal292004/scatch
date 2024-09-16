@@ -44,9 +44,9 @@ module.exports.createdOwner = async function(req, res) {
         
         let token = generateToken(createdOwner);
         res.cookie("ownertoken", token);
-        res.status(201).send(createdOwner);
+        res.status(201).redirect('/ownershop')
     } catch (err) {
-        res.status(500).send(err.message);
+        res.status(500).redirect('/')
     }
 };
 
@@ -65,7 +65,7 @@ module.exports.loginOwner = async function(req, res) {
         if (result) {
             let token = generateToken(owner);
             res.cookie("ownerToken", token);
-            res.status(200).send("Login successful");
+            res.status(201).redirect('/ownershop')
         } else {
             res.status(401).send("Invalid credentials");
         }

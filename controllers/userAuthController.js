@@ -1,4 +1,4 @@
-const generateToken=require('../utils/generateToken')
+const {generateToken}=require('../utils/generateToken')
 const userModel= require('../models/user-model')
 const bcrypt= require('bcrypt')
 
@@ -16,8 +16,9 @@ module.exports.createdUser=async function(req,res){
         } = req.body;
         
         let user= await userModel.findOne({email:email})
-        console.log(user)
         if(user){
+            
+            res.redirect('/users/login')
             return res.status(401).send('You have a account already please login')
         }
         
@@ -28,18 +29,18 @@ module.exports.createdUser=async function(req,res){
                     fullName,
                     age,
                     email,
-                    password,
+                    password:hash,
                     contact,
                     gender
                 })
                 let token=generateToken(createduser)
                 res.cookie("usertoken",token)
-                res.send(createduser)
+                res.redirect('/usershop')
             })
         })
     }
     catch(err){
-        res.send(err.message)
+        res.redirect('/')
     }
 }
 
@@ -48,10 +49,13 @@ module.exports.loginUser = async function(req, res) {
     try {
         const { email, password } = req.body;
         
-        const user = await userModel.findOne({ email });
-        
+        const user = await userModel.findOne({ email: email });
+        console.log('user'+Object.keys(user))
+
         if (!user) {
+            console.log('returned from here ')
             return res.status(404).send("user not found");
+         
         }
         
         const result = await bcrypt.compare(password, user.password);
@@ -59,9 +63,9 @@ module.exports.loginUser = async function(req, res) {
         if (result) {
             let token = generateToken(user);
             res.cookie("userToken", token);
-            res.status(200).send("Login successful");
-        } else {
-            res.status(401).send("Invalid credentials");
+            res.redirect('/usershop')
+        } else { 
+            res.redirect('/usershop')
         }
     } catch (err) {
         res.status(500).send(err.message);

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: 'var(--color-primary)',
+                        secondary: 'var(--color-secondary)',
+                        accent: 'var(--color-accent)',
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        :root {
+            --color-primary: #18181b;
+            --color-secondary: #27272a;
+            --color-accent: #3b82f6;
+        }
+        .light-theme {
+            --color-primary: #f4f4f5;
+            --color-secondary: #e4e4e7;
+            --color-accent: #3b82f6;
+        }
+    </style>
+</head>
+<body class="bg-primary text-white min-h-screen transition-colors duration-300">
+    <button id="themeToggle" class="fixed top-4 right-4 p-2 rounded-full bg-accent text-white">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.full6 3.full6 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.full6z" />
+        </svg>
+    </button>
+    <div class="container mx-auto py-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 w-full max-w-4xl mx-auto">
+            <div class="rounded-md overflow-hidden shadow bg-lime-200 min-h-screen flex flex-col justify-center items-center gap-3 p-3">
+                <div class="brand font-bold text-black font-black text-2xl italic p-3">Louis Vuitton</div>
+                <div>
+                    <img class="picture rounded-md shadow-inner w-full h-auto" src="https://imgs.search.brave.com/yU0aKFzuJ9gQuT2Kkd77nWu84aiMCavFHTpl1HY0iTs/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvODQy/MDg2OTAwL3Bob3Rv/L2hhbmRiYWctc3Rv/Y2stcGhvdG8uanBn/P3M9NjEyeDYxMiZ3/PTAmaz0yMCZjPXcx/UGNCODRaa0psMGJG/dlBSOXdPUnZGVk5K/QXdLcW1WeVB0QjJs/UFlNWW89" alt="Luxury Handbag">
+                </div>
+                <div class="productDescription text-black font-bold text-xl tracking-tighter">
+                    Elegant and spacious handbag, perfect for any occasion. Made with premium materials and exquisite craftsmanship.
+                </div>
+            </div>
+            <div class="rounded-md overflow-hidden shadow bg-red-200 min-h-screen flex flex-col justify-center items-center gap-3 p-3">
+                <div>
+                    <h1 class="productName text-3xl font-bold text-black">Luxury Tote Bag</h1>
+                </div>
+                <div class="sizes">
+                    <select name="size" id="size" class="bg-white text-black rounded p-2">
+                        <option value="">Select Size</option>
+                        <option value="Small">Small</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Large">Large</option>
+                    </select>    
+                </div>
+                <div>
+                    <button type="button" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                        Add to Cart
+                    </button>
+                </div>
+                <div class="colorsAndmaterial mt-4">
+                    <div class="color flex flex-row gap-1 mb-2">
+                        <div class="border border-2 rounded-full p-2" style="background-color: #8B4513;"></div>
+                        <div class="border border-2 rounded-full p-2" style="background-color: #000000;"></div>
+                        <div class="border border-2 rounded-full p-2" style="background-color: #F5F5DC;"></div>
+                    </div>
+                    <div class="material text-black">
+                        Material: Premium Leather
+                    </div>
+                </div>
+                <div class="rating mt-4">
+                    <p class="text-black">Rating: 4.8/5</p>
+                </div>
+                <div class="quantity mt-2">
+                    <p class="text-black">In Stock: 15</p>
+                </div>
+                <div class="category mt-2">
+                    <p class="text-black">Category: Handbags</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('light-theme');
+        });
+    </script>
+</body>
+</html>

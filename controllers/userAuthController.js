@@ -1,10 +1,10 @@
-const {generateToken}=require('../utils/generateToken')
-const userModel= require('../models/user-model')
-const bcrypt= require('bcrypt')
+const { generateToken } = require('../utils/generateToken')
+const UserModel = require('../models/user-model')
+const bcrypt = require('bcrypt')
+const SALT_ROUNDS = 14
 
-module.exports.createdUser=async function(req,res){
-    try{
-        //destructuring form data so that a new user can be fetched in here
+module.exports.createdUser = async (req, res) => {
+    try {
         const {
             username,
             fullName,
@@ -13,61 +13,62 @@ module.exports.createdUser=async function(req,res){
             password,
             contact,
             gender
-        } = req.body;
-        
-        let user= await userModel.findOne({email:email})
-        if(user){
-            
-            res.redirect('/users/login')
-            return res.status(401).send('You have a account already please login')
+        } = req.body
+
+        const existingUser = await UserModel.findOne({ email })
+        if (existingUser) {
+            req.flash('error', 'Email already in use')
+            return res.status(409).redirect('/users/login')
         }
-        
-        bcrypt.genSalt(14,function(err,salt){
-            bcrypt.hash(password,salt,async function(err,hash){
-                let createduser = await userModel.create({
+
+        bcrypt.genSalt(SALT_ROUNDS,function(err,salt){
+            bcrypt.hash(password,salt,async function(err,hashedPassword){
+                const newUser = await UserModel.create({
                     username,
                     fullName,
                     age,
                     email,
-                    password:hash,
+                    password: hashedPassword,
                     contact,
                     gender
                 })
-                let token=generateToken(createduser)
-                res.cookie("usertoken",token)
-                res.redirect('/usershop')
+                const token = generateToken(newUser)
+                res.cookie('userToken', token)
             })
         })
-    }
-    catch(err){
-        res.redirect('/')
+        return res.redirect('/users/usershop')
+    } catch (err) {
+        console.error('User creation error:', err)
+        req.flash('error', 'An error occurred during registration')
+        return res.status(500).redirect('/users/create')
     }
 }
 
-
-module.exports.loginUser = async function(req, res) {
+module.exports.loginUser = async (req, res) => {
     try {
-        const { email, password } = req.body;
-        
-        const user = await userModel.findOne({ email: email });
-        console.log('user'+Object.keys(user))
+        const { email, password } = req.body
 
+        const user = await UserModel.findOne({ email })
+       
         if (!user) {
-            console.log('returned from here ')
-            return res.status(404).send("user not found");
-         
+            req.flash('error', 'User not found')
+            return res.status(404).redirect('/users/login')
         }
         
-        const result = await bcrypt.compare(password, user.password);
+        const isPasswordValid = await bcrypt.compare(password, user.password)
         
-        if (result) {
-            let token = generateToken(user);
-            res.cookie("userToken", token);
-            res.redirect('/usershop')
+        if (isPasswordValid) {
+            const token = generateToken(user)
+            res.cookie('userToken', token)
+            return res.redirect('/users/usershop')
         } else { 
-            res.redirect('/usershop')
+            req.flash('error', 'Incorrect password')
+            return res.status(401).redirect('/users/login')
         }
+        
     } catch (err) {
-        res.status(500).send(err.message);
+        console.error('Login error:', err)
+        req.flash('error', 'An error occurred during login')
+        return res.status(500).redirect('/users/login')
     }
-};
+}

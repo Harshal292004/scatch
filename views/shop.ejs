@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: 'var(--color-primary)',
+                        secondary: 'var(--color-secondary)',
+                        accent: 'var(--color-accent)',
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        :root {
+            --color-primary: #18181b;
+            --color-secondary: #27272a;
+            --color-accent: #3b82f6;
+        }
+        .light-theme {
+            --color-primary: #f4f4f5;
+            --color-secondary: #e4e4e7;
+            --color-accent: #3b82f6;
+        }
+    </style>
+</head>
+<body class="bg-primary text-white flex items-center justify-center min-h-screen transition-colors duration-300">
+    
+    <button id="themeToggle" class="fixed top-4 right-4 p-2 rounded-full bg-accent text-white">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+        </svg>
+    </button>
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('light-theme');
+        });
+    </script>
+</body>
+</html>

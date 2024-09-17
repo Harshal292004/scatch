@@ -22,6 +22,10 @@ if(process.env.NODE_ENV==="development"){
     router.post("/create",createdUser)
     
     router.post("/login",loginUser)
+
+    router.get("/usershop",(req,res)=>{
+        res.render('purchase')
+    })
 }
 
 

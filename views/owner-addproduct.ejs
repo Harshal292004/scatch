@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: 'var(--color-primary)',
+                        secondary: 'var(--color-secondary)',
+                        accent: 'var(--color-accent)',
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        :root {
+            --color-primary: #18181b;
+            --color-secondary: #27272a;
+            --color-accent: #3b82f6;
+        }
+        .light-theme {
+            --color-primary: #f4f4f5;
+            --color-secondary: #e4e4e7;
+            --color-accent: #3b82f6;
+        }
+    </style>
+</head>
+<body class="bg-primary text-white min-h-screen transition-colors duration-300">
+    <button id="themeToggle" class="fixed top-4 right-4 p-2 rounded-full bg-accent text-white">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.6 3.6 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.6z" />
+        </svg>
+    </button>
+    <div class="container mx-auto py-8">
+        <h1 class="text-3xl font-bold mb-6">Add New Product</h1>
+        <form id="addProductForm" method="post" action="/products/create" class="space-y-4 max-w-2xl">
+            <div>
+                <label for="productName" class="block mb-1">Product Name</label>
+                <input type="text" id="productName" name="productName" required class="w-full p-2 rounded bg-secondary text-white">
+            </div>
+            <div>
+                <label for="productDescription" class="block mb-1">Product Description</label>
+                <textarea id="productDescription" name="productDescription" required class="w-full p-2 rounded bg-secondary text-white"></textarea>
+            </div>
+            <div>
+                <label for="sizes" class="block mb-1">Sizes (comma-separated)</label>
+                <input type="text" id="sizes" name="sizes" class="w-full p-2 rounded bg-secondary text-white">
+            </div>
+            <div>
+                <label for="quantity" class="block mb-1">Quantity</label>
+                <input type="number" id="quantity" name="quantity" class="w-full p-2 rounded bg-secondary text-white">
+            </div>
+            <div>
+                <label for="tags" class="block mb-1">Tags (comma-separated)</label>
+                <input type="text" id="tags" name="tags" class="w-full p-2 rounded bg-secondary text-white">
+            </div>
+            <div>
+                <label for="picture" class="block mb-1">Picture URL</label>
+                <input type="text" id="picture" name="picture" class="w-full p-2 rounded bg-secondary text-white">
+            </div>
+            <div>
+                <label for="category" class="block mb-1">Category</label>
+                <input type="text" id="category" name="category" class="w-full p-2 rounded bg-secondary text-white">
+            </div>
+            <div>
+                <label for="brand" class="block mb-1">Brand Name</label>
+                <input type="text" id="brand" name="brand" class="w-full p-2 rounded bg-secondary text-white">
+            </div>
+            <div>
+                <label for="colors" class="block mb-1">Colors (comma-separated)</label>
+                <input type="text" id="colors" name="colors" class="w-full p-2 rounded bg-secondary text-white">
+            </div>
+            <div>
+                <label for="backgroundColor" class="block mb-1">Background Color</label>
+                <input type="text" id="backgroundColor" name="backgroundColor" class="w-full p-2 rounded bg-secondary text-white">
+            </div>
+            <div>
+                <label for="textColor" class="block mb-1">Text Color</label>
+                <input type="text" id="textColor" name="textColor" class="w-full p-2 rounded bg-secondary text-white">
+            </div>
+            <div>
+                <label for="material" class="block mb-1">Material</label>
+                <input type="text" id="material" name="material" class="w-full p-2 rounded bg-secondary text-white">
+            </div>
+            <button type="submit" class="bg-accent text-white px-4 py-2 rounded hover:bg-blue-600">Add Product</button>
+        </form>
+    </div>
+    
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('light-theme');
+        });
+    </script>
+</body>
+</html>

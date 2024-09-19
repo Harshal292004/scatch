@@ -16,6 +16,8 @@ module.exports.createdUser = async (req, res) => {
         } = req.body
 
         const existingUser = await UserModel.findOne({ email })
+        
+        
         if (existingUser) {
             req.flash('error', 'Email already in use')
             return res.status(409).redirect('/users/login')
@@ -36,7 +38,7 @@ module.exports.createdUser = async (req, res) => {
                 res.cookie('userToken', token)
             })
         })
-        return res.redirect('/users/usershop')
+        return res.redirect('/users/shop')
     } catch (err) {
         console.error('User creation error:', err)
         req.flash('error', 'An error occurred during registration')
@@ -60,7 +62,7 @@ module.exports.loginUser = async (req, res) => {
         if (isPasswordValid) {
             const token = generateToken(user)
             res.cookie('userToken', token)
-            return res.redirect('/users/usershop')
+            return res.redirect('/users/shop')
         } else { 
             req.flash('error', 'Incorrect password')
             return res.status(401).redirect('/users/login')

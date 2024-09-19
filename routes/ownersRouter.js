@@ -21,6 +21,17 @@ if(process.env.NODE_ENV === "development") {
 
     router.post("/create",createdOwner)
     
+    router.get("/shop",(req,res)=>{
+        res.render('owner-shop')
+    })
+
+    router.get("/order",(req,res)=>{
+        res.render('owner-order')
+    })
+
+    router.get('/addProduct',(req,res)=>{
+        res.render('owner-addproduct')
+    })
 }
 
 module.exports = router

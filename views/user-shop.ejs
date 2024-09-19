@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: 'var(--color-primary)',
+                        secondary: 'var(--color-secondary)',
+                        accent: 'var(--color-accent)',
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        :root {
+            --color-primary: #18181b;
+            --color-secondary: #27272a;
+            --color-accent: #3b82f6;
+        }
+        .light-theme {
+            --color-primary: #f4f4f5;
+            --color-secondary: #e4e4e7;
+            --color-accent: #3b82f6;
+        }
+    </style>
+</head>
+<body class="bg-primary text-white flex items-center justify-center min-h-screen transition-colors duration-300">
+    
+    <button id="themeToggle" class="fixed top-4 right-4 p-2 rounded-full bg-accent text-white">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+        </svg>
+    </button>
+
+    <div class="grid grid-cols-2 gap-6 p-6">
+        
+        <div class="col-span-1 w-80 bg-secondary rounded-lg shadow-lg p-4">
+            <h2 class="text-xl font-bold mb-4">Create Account</h2>
+            <!-- Add your account creation form here -->
+        </div>
+        
+        <div class="col-span-1 w-80 bg-secondary rounded-lg shadow-lg p-4 flex flex-row flex-wrap ">
+            <div class="product bg-white text-gray-800 rounded-lg shadow-md overflow-hidden">   
+                <div class="relative h-40 overflow-hidden">
+                    <img src="https://via.placeholder.com/300x200" alt="Product Image" class="w-full h-full object-cover">
+                    <div class="absolute top-2 right-2 bg-accent text-white px-2 py-1 rounded-full text-xs">
+                        In Stock
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h3 class="text-lg font-semibold mb-2">Product Name</h3>
+                    <p class="text-sm text-gray-600 mb-2">Product Description</p>
+                    <div class="flex justify-between items-center mb-2">
+                        <div class="text-sm">
+                            <span class="font-bold">Brand:</span> Brand Name
+                        </div>
+                        <div class="text-sm">
+                            <span class="font-bold">Category:</span> Category
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-2 mb-2">
+                        <span class="text-xs bg-gray-200 px-2 py-1 rounded">Size 1</span>
+                        <span class="text-xs bg-gray-200 px-2 py-1 rounded">Size 2</span>
+                    </div>
+                    <div class="flex flex-wrap gap-2 mb-2">
+                        <span class="w-4 h-4 rounded-full bg-red-500"></span>
+                        <span class="w-4 h-4 rounded-full bg-blue-500"></span>
+                        <span class="w-4 h-4 rounded-full bg-green-500"></span>
+                    </div>
+                    <div class="flex items-center mb-2">
+                        <div class="flex text-yellow-400">
+                            ★★★★☆
+                        </div>
+                        <span class="text-sm ml-1">(4.0)</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-lg font-bold">$99.99</span>
+                        <button class="bg-accent text-white px-4 py-2 rounded hover:bg-blue-600">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('light-theme');
+        });
+    </script>
+</body>
+</html>

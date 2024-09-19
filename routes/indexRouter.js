@@ -9,12 +9,12 @@ router.get('/',function(req,res){
 })
 
 router.get('/usershop',isUserLoggedIn,function(req,res){
-    res.render('shop')
+    res.render('purchase')
+
 })
 
 
 router.get('/ownershop',isOwnerLoggedIn,function(req,res){
-    console.log(Object.keys(req.user))
     res.render('shop')
 })
 

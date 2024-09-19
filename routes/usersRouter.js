@@ -23,8 +23,27 @@ if(process.env.NODE_ENV==="development"){
     
     router.post("/login",loginUser)
 
-    router.get("/usershop",(req,res)=>{
-        res.render('purchase')
+
+
+    router.get("/purchase",(req,res)=>{
+        res.render('user-purchase')
+    })
+    
+    router.get("/shop",(req,res)=>{
+        res.render('user-shop')
+    })
+
+
+    router.get("/payment",(req,res)=>{
+        res.render('user-payment')
+    })
+
+    router.get("/cart",(req,res)=>{
+        res.render('user-cart')
+    })
+
+    router.get("/order",(req,res)=>{
+        res.render('user-order')
     })
 }
 

@@ -1,7 +1,7 @@
 const express= require('express')
 const router= express.Router()
 const {createdUser,loginUser}=require('../controllers/userAuthController')
-
+const productModel=require('../models/product-model')
 router.get("/",function(req,res){
     res.send("hey its working ")
 })
@@ -29,8 +29,9 @@ if(process.env.NODE_ENV==="development"){
         res.render('user-purchase')
     })
     
-    router.get("/shop",(req,res)=>{
-        res.render('user-shop')
+    router.get("/shop",async(req,res)=>{
+        let products= await productModel.find()
+        res.render('user-shop',{products})
     })
 
 
@@ -45,6 +46,8 @@ if(process.env.NODE_ENV==="development"){
     router.get("/order",(req,res)=>{
         res.render('user-order')
     })
+
+
 }
 
 

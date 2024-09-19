@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+
 // Define the product schema
 const productSchema = mongoose.Schema({
     productName: {
@@ -9,6 +10,10 @@ const productSchema = mongoose.Schema({
     productDescription: {
         type: String,
         required: true
+    },
+    price:{
+        type:Number,
+        default:0
     },
     sizes: {
         type: [String], // Array of strings for sizes
@@ -27,8 +32,7 @@ const productSchema = mongoose.Schema({
         default: []
     },
     picture: {
-        type: String,
-        default: '' // Default to an empty string if no picture is provided
+        type: Buffer
     },
     category: {
         type: String,

@@ -2,13 +2,14 @@ const productModel=require('../models/product-model')
 
 module.exports.createdProduct=async (req, res)=> {
     try {
+
         let {
             productName,
             productDescription,
+            price,
             sizes,
             quantity,
             tags,
-            picture,
             category,
             brand,
             colors,
@@ -17,18 +18,21 @@ module.exports.createdProduct=async (req, res)=> {
             material,
         } = req.body
 
+
+
         // Handle array fields
         sizes = Array.isArray(sizes) ? sizes[0].split(',') : []
         tags = Array.isArray(tags) ? tags[0].split(',') : []
         colors = Array.isArray(colors) ? colors[0].split(',') : []
-        
+
         const product = await productModel.create({
             productName,
             productDescription,
+            price,
             sizes,
             quantity,
             tags,
-            picture,
+            picture : req.file.buffer,
             category,
             brand,
             colors,

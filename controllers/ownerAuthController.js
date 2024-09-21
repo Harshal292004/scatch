@@ -1,4 +1,4 @@
-const generateToken = require('../utils/generateToken');
+const {generateToken} = require('../utils/generateToken');
 const ownerModel = require('../models/owner-model');
 const bcrypt = require('bcrypt');
 
@@ -59,8 +59,8 @@ module.exports.createdOwner = async function(req, res) {
 };
 
 module.exports.loginOwner = async function(req, res) {
-    try {
-        
+    /* try {
+         */
         const { email, password } = req.body;
         
         const owner = await ownerModel.findOne({ email:email });
@@ -80,9 +80,9 @@ module.exports.loginOwner = async function(req, res) {
             req.flash('error','Invalid credentials')
             return res.status(401).redirect('/owners/login')
         }
-    } catch (err) {
+    /* } catch (err) {
         console.error('Owner login error:', err)
         req.flash('error', 'An error occurred during login')
         return res.status(500).redirect('/owners/login')
-    }
+    } */
 };

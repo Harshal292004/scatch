@@ -38,7 +38,7 @@ module.exports.createdUser = async (req, res) => {
                 res.cookie('userToken', token)
             })
         })
-        return res.redirect('/users/shop')
+        return res.redirect(`/users/shop/${user._id}`)
     } catch (err) {
         console.error('User creation error:', err)
         req.flash('error', 'An error occurred during registration')
@@ -62,7 +62,7 @@ module.exports.loginUser = async (req, res) => {
         if (isPasswordValid) {
             const token = generateToken(user)
             res.cookie('userToken', token)
-            return res.redirect('/users/shop')
+            return res.redirect(`/users/shop/${user._id}`)
         } else { 
             req.flash('error', 'Incorrect password')
             return res.status(401).redirect('/users/login')

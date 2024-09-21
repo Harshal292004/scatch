@@ -102,13 +102,10 @@
                                     <p class="text-sm text-red-500 mb-2">Only <%= product.quantity %> left!</p>
                                 <% } %>
                                 <div class="flex justify-between items-center">
-                                    <span class="text-lg font-bold">$<%= (product.price || 0).toFixed(2) %></span>
-                                    <form action="/add-to-cart" method="POST">
-                                        <input type="hidden" name="productId" value="<%= product._id %>">
-                                        <button type="submit" class="bg-accent text-white px-4 py-2 rounded hover:bg-blue-600" <%= !product.inStock ? 'disabled' : '' %>>
-                                            <%= product.inStock ? 'Add to Cart' : 'Out of Stock' %>
-                                        </button>
-                                    </form>
+                                    <span class="text-lg font-bold">$<%= (product.price || 0).toFixed(2) %></span>                                   
+                                    <button type="submit" onclick="addToCart('<%= userId %>', '<%= product._id %>')" class="bg-accent text-white px-4 py-2 rounded hover:bg-blue-600" <%= !product.inStock ? 'disabled' : '' %>>
+                                        <%= product.inStock ? 'Add to Cart' : 'Out of Stock' %>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -124,10 +121,28 @@
     </div>
     <script>
         const themeToggle = document.getElementById('themeToggle');
+
+
+
+
         const body = document.body;
+        
+        
         themeToggle.addEventListener('click', () => {
             body.classList.toggle('light-theme');
         });
+
+        const addToCart=(userId,productId)=>{
+            fetch(`/users/addtocart/${userId}/${productId}`,{method:'POST'})
+            .then(response=>response.url)
+            .then(data=>console.log(data))
+            .catch(error=>{
+                console.error('Error,',error)
+                alert('An error occured')
+            })
+        }
+
+
     </script>
 </body>
 </html>

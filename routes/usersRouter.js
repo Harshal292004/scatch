@@ -3,6 +3,7 @@ const router= express.Router()
 const {createdUser,loginUser}=require('../controllers/userAuthController')
 const productModel=require('../models/product-model')
 const userModel= require('../models/user-model')
+const orderModel= require('../models/order-model')
 router.get("/",function(req,res){
     res.send("hey its working ")
 })
@@ -74,24 +75,82 @@ if(process.env.NODE_ENV==="development"){
         }
     })
 
-    router.get('/users/cart/:userId', async (req, res) => {
+    router.get('/cart/:userId', async (req, res) => {
         try {
-            const userId = req.params.userId;
+            const userId = req.params.userId
             
-            // Use findById and populate the cart field
             const user = await userModel.findById(userId).populate('cart');
     
-            if (!user) {
-                return res.status(404).send('User not found');
-            }
-    
-            // The populated cart is now available as user.cart
             const products = user.cart;
     
-            res.render('user-cart', { products });
+            res.render('user-cart', { products, userId });
         } catch (error) {
             console.error('Error fetching cart:', error);
-            res.status(500).send('An error occurred while fetching the cart');
+        }
+    })
+
+
+
+    router.get(`/returnorder/:userId`,async (req,res)=>{
+        
+        try{
+            
+            const userId=req.params.userId
+
+            const user= await userModel.findById(userId).populate('order')
+
+
+
+
+
+        }catch(error){
+
+        }
+
+    })
+
+
+    router.post('/placeOrder/:userId/:productId',async (req,res)=>{
+        
+        try{
+
+            const userId=req.params.userId
+            
+            const productId=req.params.productId
+
+
+
+            const  user= await userModel.findOne({_id:userId})
+            
+            const product = await productModel.findOne({_id:productId})
+
+
+
+            let {quantity} = req.body
+
+
+            user.order.push(productId)
+            
+            await user.save()
+            let totalAmount=product.price*quantity
+            let order=await orderModel.create({
+                user:userId,
+                product:productId,
+                quantity:quantity,
+                price:product.price,
+                totalAmount:totalAmount,
+                date:Date.now()
+            })
+
+            if(order){
+                
+            }
+            else{
+
+            }
+
+        }catch(error){
+
         }
     })
 }

@@ -86,7 +86,7 @@ const productSchema = mongoose.Schema({
             }
         }
     ]
-});
+})
 
 // Export the model
 module.exports = mongoose.model("product", productSchema);

@@ -51,6 +51,12 @@ const userSchema = mongoose.Schema({
             ref: "product"
         }
     ],
+    orders:[
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref: "order"
+        }
+    ],
     wishlist: [
         {
             type: mongoose.Schema.Types.ObjectId,
@@ -60,7 +66,8 @@ const userSchema = mongoose.Schema({
     profilePic: {
         type: String,
         default: "default.webp"
-    }
+    },
+
 });
 
 // Export the model

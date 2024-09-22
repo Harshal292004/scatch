@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Product listing page">
-    <title>Product Listing</title>
+    <title>SCATH - Welcome</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -33,137 +32,107 @@
         }
     </style>
 </head>
-<body class="bg-primary text-white transition-colors duration-300">
-    <div class="container mx-auto px-4">
-       <div class="nav p-4 flex flex-row gap-4 justify-between items-center ">
-            <h1 class="text-2xl font-bold my-8">Welcome to Our Product Listing</h1>
-            <div class="flex flex-row items-center  gap-4">
-                   
-                    <button onclick="loadCart('<%=userId%>')" id="goToCart" class="p-1 w-32 h-10 relative  bg-accent rounded-md text-white">
-                        <div class="flex flex-row gap-2 justify-center items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
-                            </svg>  
-                            <p>Go to Cart</p>     
-                        </div>      
+<body class="bg-primary text-white min-h-screen transition-colors duration-300">
+    <nav class="fixed top-0 left-0 right-0 bg-secondary shadow-md z-10">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="text-accent font-bold italic text-2xl tracking-tighter">SCATH</div>
+                <div class="flex items-center space-x-4">
+                    <button onclick="loadCart('<%=userId%>')" id="goToCart" class="flex items-center space-x-2 bg-accent hover:bg-accent-dark rounded-md text-white px-4 py-2 transition duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                        </svg>  
+                        <span>Cart</span>
                     </button>
-                    
-                    <button onclick="getReturn('<%=userId%>')" id="returnOrder" class="p-1 w-44 h-10 relative bg-accent rounded-md text-white">
-                        <p>Returns and orders</p>       
+                    <button onclick="getReturn('<%=userId%>')" id="returnOrder" class="bg-accent hover:bg-accent-dark rounded-md text-white px-4 py-2 transition duration-300">
+                        Returns
                     </button>    
-                </div>
-        </div>    
-
-        <div class="grid md:grid-cols-3 gap-6">
-            <div class="md:col-span-1 bg-secondary rounded-lg shadow-lg p-4">
-                <h2 class="font-bold italic text-lg mb-4">Sort and Filter</h2>
-                <!-- Add sort and filter options here -->
-            </div>
-            <div class="md:col-span-2 bg-secondary rounded-lg shadow-lg p-4">
-                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <% products.forEach((product) => { %>
-                        <div class="bg-[<%=product.backgroundColor%>] text-gray-800 rounded-lg shadow-md overflow-hidden">
-                            <div class="relative h-48 overflow-hidden">
-                                <img src="/product-image/<%= product._id %>" alt="<%= product.productName %>" class="w-full h-full object-cover">
-                                <div class="absolute top-2 right-2 bg-accent text-white px-2 py-1 rounded-full text-xs">
-                                    <%= product.inStock ? 'In Stock' : 'Out of Stock' %>
-                                </div>
-                            </div>
-                            <div class="p-4">
-                                <h3 class="text-lg font-semibold mb-2"><%= product.productName %></h3>
-                                <p class="text-sm mb-2"><%= product.productDescription %></p>
-                                <div class="flex justify-between items-center mb-2">
-                                    <% if (product.brand && product.brand.isApplicable) { %>
-                                        <div class="text-sm">
-                                            <span class="font-bold">Brand:</span> <%= product.brand.name %>
-                                        </div>
-                                    <% } %>
-                                    <div class="text-sm">
-                                        <span class="font-bold">Category:</span> <%= product.category || 'Uncategorized' %>
-                                    </div>
-                                </div>
-                                <% if (product.material) { %>
-                                    <p class="text-sm mb-2"><span class="font-bold">Material:</span> <%= product.material %></p>
-                                <% } %>
-                                <% if (product.sizes && product.sizes.length > 0) { %>
-                                    <div class="flex flex-wrap gap-2 mb-2">
-                                        <% product.sizes.forEach((size) => { %>
-                                            <span class="text-xs bg-[<%=product.backgroundColor%>] px-2 py-1 rounded"><%= size %></span>
-                                        <% }) %>
-                                    </div>
-                                <% } %>
-                                <% if (product.colors && product.colors.length > 0) { %>
-                                    <div class="flex flex-wrap gap-2 mb-2">
-                                        <% product.colors.forEach(color => { %>
-                                            <span class="w-4 h-4 rounded-full bg-[<%=color%>]"></span>
-                                        <% }) %>
-                                    </div>
-                                <% } %>
-                                <% if (product.tags && product.tags.length > 0) { %>
-                                    <div class="flex flex-wrap gap-2 mb-2">
-                                        <% product.tags.forEach(tag => { %>
-                                            <span class="text-xs bg-gray-200 px-2 py-1 rounded"><%= tag %></span>
-                                        <% }) %>
-                                    </div>
-                                <% } %>
-                                <div class="flex items-center mb-2">
-                                    <% if (product.reviews && product.reviews.length > 0) { %>
-                                        <div class="flex text-yellow-400">
-                                            <%= product.rating.toFixed(1) %> ★
-                                        </div>
-                                        <span class="text-sm ml-1">(<%= product.reviews.length %> reviews)</span>
-                                    <% } else { %>
-                                        <span class="text-sm">No reviews yet</span>
-                                    <% } %>
-                                </div>
-                                <% if (product.quantity < 10 && product.quantity > 0) { %>
-                                    <p class="text-sm text-red-500 mb-2">Only <%= product.quantity %> left!</p>
-                                <% } %>
-                                <div class="flex justify-between items-center">
-                                    <span class="text-lg font-bold">$<%= (product.price || 0).toFixed(2) %></span>                                   
-                                    <button type="submit" onclick="addToCart('<%= userId %>', '<%= product._id %>')" class="bg-accent text-white px-4 py-2 rounded hover:bg-blue-600" <%= !product.inStock ? 'disabled' : '' %>>
-                                        <%= product.inStock ? 'Add to Cart' : 'Out of Stock' %>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    <% }) %>
                 </div>
             </div>
         </div>
-        <button id="themeToggle" class="fixed bottom-4 right-4 p-2 rounded-full bg-accent text-white" aria-label="Toggle theme">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-            </svg>
-        </button>
-    </div>
+    </nav>
+
+    <main class="container mx-auto px-4 pt-20 pb-16">
+        <section class="mb-8">
+            <h2 class="text-2xl font-semibold mb-4">For You</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                <% products.forEach((product) => { %>
+                    <button onclick="loadProduct('<%=product._id%>','<%=userId%>')" class="block group">
+                        <div class="bg-[<%=product.backgroundColor%>] text-gray-800 rounded-lg shadow-md overflow-hidden transition duration-300 transform group-hover:scale-105 h-48">
+                            <div class="relative h-24 overflow-hidden">
+                                <img src="data:image/jpeg;base64,<%= product.picture.toString('base64') %>" class="w-full h-full object-cover">
+                            </div>
+                            <div class="p-2">
+                                <h3 class="text-sm font-semibold mb-1 truncate"><%=product.productName%></h3>
+                                <div class="flex items-center">
+                                    <% if (product.reviews && product.reviews.length > 0) { %>
+                                        <div class="flex text-yellow-400 text-xs">
+                                            <%= product.rating.toFixed(1) %> ★
+                                        </div>
+                                        <span class="text-xs ml-1">(<%= product.reviews.length %>)</span>
+                                    <% } else { %>
+                                        <span class="text-xs">No reviews</span>
+                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                    </button>
+                <% }) %>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-2xl font-semibold mb-4">Latest</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                <% products.forEach((product) => { %>
+                    <button onclick="loadProduct('<%=product._id%>','<%=userId%>')" class="block group">
+                        <div class="bg-[<%=product.backgroundColor%>] text-gray-800 rounded-lg shadow-md overflow-hidden transition duration-300 transform group-hover:scale-105 h-48">
+                            <div class="relative h-24 overflow-hidden">
+                                <img src="data:image/jpeg;base64,<%= product.picture.toString('base64') %>" class="w-full h-full object-cover">
+                            </div>
+                            <div class="p-2">
+                                <h3 class="text-sm font-semibold mb-1 truncate"><%=product.productName%></h3>
+                                <div class="flex items-center">
+                                    <% if (product.reviews && product.reviews.length > 0) { %>
+                                        <div class="flex text-yellow-400 text-xs">
+                                            <%= product.rating.toFixed(1) %> ★
+                                        </div>
+                                        <span class="text-xs ml-1">(<%= product.reviews.length %>)</span>
+                                    <% } else { %>
+                                        <span class="text-xs">No reviews</span>
+                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                    </button>
+                <% }) %>
+            </div>
+        </section>
+    </main>
+
+    <button id="themeToggle" class="fixed bottom-4 right-4 p-3 rounded-full bg-accent text-white hover:bg-blue-600 transition duration-300 shadow-lg">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+        </svg>
+    </button>
+
     <script>
         const themeToggle = document.getElementById('themeToggle');
-        const goToCart = document.getElementById('goToCart');
         const body = document.body;
-    
+
         themeToggle.addEventListener('click', () => {
             body.classList.toggle('light-theme');
         });
-    
-        const addToCart = (userId, productId) => {
-            fetch(`/users/addtocart/${userId}/${productId}`, { method: 'POST' })
-                .then(response => response.url)
-                .then(data => console.log(data))
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('An error occurred');
-                });
-        }
         const loadCart = (userId) => {
             window.location.href = `/users/cart/${userId}`;
         };
 
         const getReturn=(userId)=>{
-            window.location.href=`/users/returnorder/${userId}`
+            window.location.href=`/users/order/${userId}`
         }
-
+        const loadProduct=(productId,userId)=>{
+            window.location.href= `/users/product/${productId}/${userId}`
+        }
     </script>
-    
 </body>
 </html>

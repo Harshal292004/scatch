@@ -11,45 +11,33 @@ router.get("/",function(req,res){
 
 
 if(process.env.NODE_ENV==="development"){
+    //<--done screens 
+    //working 
     router.get("/login",function(req,res){
         res.render('user-login')
     })
 
-    
+    //working 
     router.get("/create",function(req,res){
         res.render('user-create')
     })
 
-    
+    //working 
     router.post("/create",createdUser)
     
+    //working 
     router.post("/login",loginUser)
 
-
-
-    router.get("/purchase",(req,res)=>{
-        res.render('user-purchase')
-    })
-    
+    //to add recommedations and personlisation options for later 
+    //main route of user shop
     router.get("/shop/:userId",async(req,res)=>{
         let products= await productModel.find()
-        const userId= req.params.userId
+        const userId=req.params.userId
         res.render('user-shop',{products,userId})
     })
 
-
-    router.get("/payment",(req,res)=>{
-        res.render('user-payment')
-    })
-
-    router.get("/cart",(req,res)=>{
-        res.render('user-cart')
-    })
-
-    router.get("/order",(req,res)=>{
-        res.render('user-order')
-    })
-
+    //to added the redirection for the mishap 
+    //the route adding product  to the cart  
     router.post("/addtocart/:userid/:productid", async (req, res) => {
         const userId = req.params.userid;
         const productId = req.params.productid;
@@ -68,13 +56,14 @@ if(process.env.NODE_ENV==="development"){
             user.cart.push(productId);
             await user.save();
             req.flash('success','poduct added to the cart ')
-            return res.status(200).redirect('/users/cart')
+            return res.status(200).redirect(`/cart/${userId}`)
         } catch (error) {
             req.flash('error','Something not found!!')
-            return res.status(404).redirect(`/users/shop/${userId}`)
+            return res.status(404).redirect(`/`)
         }
     })
 
+    //working
     router.get('/cart/:userId', async (req, res) => {
         try {
             const userId = req.params.userId
@@ -83,30 +72,46 @@ if(process.env.NODE_ENV==="development"){
     
             const products = user.cart;
     
-            res.render('user-cart', { products, userId });
+            res.render('user-cart', {products});
         } catch (error) {
             console.error('Error fetching cart:', error);
         }
     })
 
-
-
-    router.get(`/returnorder/:userId`,async (req,res)=>{
+    //working 
+    router.get('/order/:userId',async (req,res)=>{
         
         try{
-            
             const userId=req.params.userId
-
-            const user= await userModel.findById(userId).populate('order')
-
-
-
-
-
+            const user= await userModel.findById(userId).populate('orders')
+            const orders=user.orders
+            res.render('user-order',{orders})
         }catch(error){
-
+            console.error('Error fetching orders', error);
         }
 
+    })
+
+    //-->
+
+
+    router.get('/product/:productId/:userId',async(req,res)=>{
+        try{
+            const productId=req.params.productId
+            const userId=req.params.userId
+            const product=productModel.findById(productId)
+            res.render('user-product-detail-screen',{product,userId})
+        }
+        catch(error){
+            
+        }
+    })
+    
+
+    
+    
+    router.get("/payment",(req,res)=>{
+        res.render('user-payment')
     })
 
 
@@ -141,13 +146,6 @@ if(process.env.NODE_ENV==="development"){
                 totalAmount:totalAmount,
                 date:Date.now()
             })
-
-            if(order){
-                
-            }
-            else{
-
-            }
 
         }catch(error){
 

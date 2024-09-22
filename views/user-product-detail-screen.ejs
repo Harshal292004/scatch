@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCATH - Welcome</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: 'var(--color-primary)',
+                        secondary: 'var(--color-secondary)',
+                        accent: 'var(--color-accent)',
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        :root {
+            --color-primary: #18181b;
+            --color-secondary: #27272a;
+            --color-accent: #3b82f6;
+        }
+        .light-theme {
+            --color-primary: #f4f4f5;
+            --color-secondary: #e4e4e7;
+            --color-accent: #3b82f6;
+        }
+    </style>
+</head>
+<body class="bg-primary text-white min-h-screen transition-colors duration-300">
+    <nav class="fixed top-0 left-0 right-0 bg-secondary shadow-md z-10">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="text-accent font-bold italic text-2xl tracking-tighter">SCATH</div>
+                <div class="flex items-center space-x-4">
+                    <button onclick="loadCart('<%=userId%>')" id="goToCart" class="flex items-center space-x-2 bg-accent hover:bg-accent-dark rounded-md text-white px-4 py-2 transition duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                        </svg>  
+                        <span>Cart</span>
+                    </button>
+                    <button onclick="getReturn('<%=userId%>')" id="returnOrder" class="bg-accent hover:bg-accent-dark rounded-md text-white px-4 py-2 transition duration-300">
+                        Returns
+                    </button>    
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="grid grid-cols-3 gap-4 container mx-auto px-4 pt-20 pb-16">
+        <!--image section-->
+        <section class="imageColors p-3">
+                <%
+                <div class="shadow-md overflow-hidden transition duration-300 transform group-hover:scale-105 relative h-3/5 overflow-hidden">
+                    <img src="data:image/jpeg;base64,<%= product.picture.toString('base64') %>" class="w-full h-full object-cover">
+                </div>
+
+                <div class="mt-4 p-2">
+                    <div class="flex items-center">
+                        <% if (product.colors && product.colors.length > 0) { %>
+                            <div class="flex flex-wrap gap-2 mb-2">
+                                <% product.colors.forEach(color => { %>
+                                    <span class="w-8 h-8 rounded-full bg-[<%=color%>]"></span>
+                                <% }) %>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+
+                %>
+            </div>
+        </section>
+
+        <section class="details p-4 ">
+            <h2 class="text-5xl font-semibold mb-4"><%=product.productname%></h2>
+            <div class="ratings flex flex items-center">
+                <% if (product.reviews && product.reviews.length > 0) { %>
+                        <div class="flex text-yellow-400 text-xs">
+                            <%= product.rating.toFixed(1) %> ★
+                        </div>
+                        <span class="text-xs ml-1">(<%= product.reviews.length %>)</span>
+                <% } else { %>
+                    <span class="text-xs">No reviews</span>
+                <% } %>    
+            </div>
+            <div class="hr h-2 w-32 bg-black "></div>
+            <div class="desc text-2xl font-light tracking-tighter ">
+                <%=product.productdescription%>    
+            </div>
+            <div class="reviews  flex  flex-row gap-4">
+                <%
+                if(product.reviews && product.reviews.length > 0){
+                    %>
+                    product.reviews.forEach(review => {
+                        //to be implemented 
+                    });
+                    <%
+                }
+                %>
+            </div>
+        </section>
+
+        <section class="purchaseSection ">
+            <h1><%=product.price%></h1>
+            
+        </secction>
+    </main>
+
+    <button id="themeToggle" class="fixed bottom-4 right-4 p-3 rounded-full bg-accent text-white hover:bg-blue-600 transition duration-300 shadow-lg">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+        </svg>
+    </button>
+
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('light-theme');
+        })
+        const loadCart = (userId) => {
+            window.location.href = `/users/cart/${userId}`;
+        }
+
+        const getReturn=(userId)=>{
+            window.location.href=`/users/order/${userId}`
+        }
+    </script>
+</body>
+</html>

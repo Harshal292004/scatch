@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SCATH - Welcome</title>
+    <title>SCATH - <%= product.productName %></title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -38,13 +38,13 @@
             <div class="flex justify-between items-center py-4">
                 <div class="text-accent font-bold italic text-2xl tracking-tighter">SCATH</div>
                 <div class="flex items-center space-x-4">
-                    <button onclick="loadCart('<%=userId%>')" id="goToCart" class="flex items-center space-x-2 bg-accent hover:bg-accent-dark rounded-md text-white px-4 py-2 transition duration-300">
+                    <button onclick="loadCart('<%= user._id %>')" id="goToCart" class="flex items-center space-x-2 bg-accent hover:bg-accent-dark rounded-md text-white px-4 py-2 transition duration-300">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
                         </svg>  
                         <span>Cart</span>
                     </button>
-                    <button onclick="getReturn('<%=userId%>')" id="returnOrder" class="bg-accent hover:bg-accent-dark rounded-md text-white px-4 py-2 transition duration-300">
+                    <button onclick="getReturn('<%= user._id %>')" id="returnOrder" class="bg-accent hover:bg-accent-dark rounded-md text-white px-4 py-2 transition duration-300">
                         Returns
                     </button>    
                 </div>
@@ -52,63 +52,116 @@
         </div>
     </nav>
 
-    <main class="grid grid-cols-3 gap-4 container mx-auto px-4 pt-20 pb-16">
-        <!--image section-->
-        <section class="imageColors p-3">
-                <%
-                <div class="shadow-md overflow-hidden transition duration-300 transform group-hover:scale-105 relative h-3/5 overflow-hidden">
-                    <img src="data:image/jpeg;base64,<%= product.picture.toString('base64') %>" class="w-full h-full object-cover">
+    <main class="container mx-auto px-4 pt-24 pb-16">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Image Section -->
+            <section class="lg:col-span-1">
+                <div class="shadow-md overflow-hidden transition duration-300 transform hover:scale-105 relative aspect-square">
+                    <img src="data:image/jpeg;base64,<%= product.picture.toString('base64') %>" alt="<%= product.productName %>" class="w-full h-full object-cover">
                 </div>
-
-                <div class="mt-4 p-2">
-                    <div class="flex items-center">
-                        <% if (product.colors && product.colors.length > 0) { %>
-                            <div class="flex flex-wrap gap-2 mb-2">
-                                <% product.colors.forEach(color => { %>
-                                    <span class="w-8 h-8 rounded-full bg-[<%=color%>]"></span>
-                                <% }) %>
-                            </div>
-                        <% } %>
-                    </div>
+                <div class="mt-4">
+                    <% if (product.colors && product.colors.length > 0) { %>
+                        <div class="flex flex-wrap gap-2 mb-2">
+                            <% product.colors.forEach(color => { %>
+                                <span class="w-8 h-8 rounded-full bg-[<%= color %>]"></span>
+                            <% }) %>
+                        </div>
+                    <% } %>
                 </div>
+            </section>
 
-                %>
-            </div>
-        </section>
-
-        <section class="details p-4 ">
-            <h2 class="text-5xl font-semibold mb-4"><%=product.productname%></h2>
-            <div class="ratings flex flex items-center">
-                <% if (product.reviews && product.reviews.length > 0) { %>
-                        <div class="flex text-yellow-400 text-xs">
+            <!-- Details Section -->
+            <section class="lg:col-span-1">
+                <h1 class="text-4xl font-semibold mb-2"><%= product.productName %></h1>
+                <div class="flex items-center mb-4">
+                    <% if (product.reviews && product.reviews.length > 0) { %>
+                        <div class="flex text-yellow-400 text-sm">
                             <%= product.rating.toFixed(1) %> ★
                         </div>
-                        <span class="text-xs ml-1">(<%= product.reviews.length %>)</span>
-                <% } else { %>
-                    <span class="text-xs">No reviews</span>
-                <% } %>    
-            </div>
-            <div class="hr h-2 w-32 bg-black "></div>
-            <div class="desc text-2xl font-light tracking-tighter ">
-                <%=product.productdescription%>    
-            </div>
-            <div class="reviews  flex  flex-row gap-4">
-                <%
-                if(product.reviews && product.reviews.length > 0){
-                    %>
-                    product.reviews.forEach(review => {
-                        //to be implemented 
-                    });
-                    <%
-                }
-                %>
-            </div>
-        </section>
+                        <span class="text-sm ml-2">(<%= product.reviews.length %> reviews)</span>
+                    <% } else { %>
+                        <span class="text-sm">No reviews yet</span>
+                    <% } %>
+                </div>
+                <div class="h-1 w-32 bg-accent mb-4"></div>
+                <p class="text-lg mb-6"><%= product.productDescription %></p>
+                <div class="mb-4">
+                    <h3 class="font-semibold mb-2">Available Sizes:</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <% product.sizes.forEach(size => { %>
+                            <span class="px-3 py-1 border border-accent rounded-md"><%= size %></span>
+                        <% }) %>
+                    </div>
+                </div>
+                <% if (product.material) { %>
+                    <p class="mb-4"><strong>Material:</strong> <%= product.material %></p>
+                <% } %>
+                <% if (product.brand && product.brand.isApplicable) { %>
+                    <p class="mb-4"><strong>Brand:</strong> <%= product.brand.name %></p>
+                <% } %>
+            </section>
 
-        <section class="purchaseSection ">
-            <h1><%=product.price%></h1>
-            
-        </secction>
+            <!-- Purchase Section -->
+            <section class="lg:col-span-1">
+                <div class="bg-secondary p-6 rounded-lg shadow-md">
+                    <h2 class="text-3xl font-bold mb-4">$<%= product.price.toFixed(2) %></h2>
+                    <p class="mb-4"><%= product.inStock ? 'In Stock' : 'Out of Stock' %></p>
+                    <form action="/add-to-cart" method="POST">
+                        <input type="hidden" name="userId" value="<%= user._id %>">
+                        <input type="hidden" name="productId" value="<%= product.id %>">
+                        <div class="mb-4">
+                            <label for="quantity" class="block mb-2">Quantity:</label>
+                            <input type="number" id="quantity" name="quantity" min="1" max="<%= product.quantity %>" value="1" class="w-full p-2 bg-primary rounded-md">
+                        </div>
+                        <% if (user.address && user.address.length > 0) { %>
+                            <div class="mb-4">
+                                <label for="address" class="block mb-2">Shipping Address:</label>
+                                <select id="address" name="addressId" class="w-full p-2 bg-primary rounded-md">
+                                    <% user.address.forEach((address, index) => { %>
+                                        <option value="<%= index %>">
+                                            <%= address.street %>, <%= address.city %>, <%= address.state %>, <%= address.postalCode %>, <%= address.country %>
+                                        </option>
+                                    <% }) %>
+                                </select>
+                            </div>
+                        <% } else { %>
+                            <p class="mb-4">Please add a shipping address to your profile.</p>
+                        <% } %>
+                        <button type="submit" class="w-full bg-accent hover:bg-accent-dark text-white font-bold py-2 px-4 rounded-md transition duration-300">
+                            Buy Now
+                        </button>
+                    </form>
+                    
+                    <button onclick="addToCart('<%= user._id %>', '<%= product._id %>')"  class="mt-5 w-full bg-accent hover:bg-accent-dark text-white font-bold py-2 px-4 rounded-md transition duration-300">
+                    Add to Cart
+                    </button>
+                </div>
+            </section>
+        </div>
+
+        <!-- Reviews Section -->
+        <section class="mt-12">
+            <h2 class="text-2xl font-semibold mb-4">Customer Reviews</h2>
+            <% if (product.reviews && product.reviews.length > 0) { %>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <% product.reviews.forEach(review => { %>
+                        <div class="bg-secondary p-4 rounded-lg shadow-md">
+                            <div class="flex items-center mb-2">
+                                <div class="flex text-yellow-400">
+                                    <% for (let i = 0; i < 5; i++) { %>
+                                        <span><%= i < review.rating ? '★' : '☆' %></span>
+                                    <% } %>
+                                </div>
+                                <!-- <span class="ml-2 text-sm">by <%= review.user.username %></span> -->
+                            </div>
+                            <!-- <p><%= review.comment %></p> -->
+                        </div>
+                    <% }) %>
+                </div>
+            <% } else { %>
+                <p>No reviews yet. Be the first to review this product!</p>
+            <% } %>
+        </section>
     </main>
 
     <button id="themeToggle" class="fixed bottom-4 right-4 p-3 rounded-full bg-accent text-white hover:bg-blue-600 transition duration-300 shadow-lg">
@@ -121,16 +174,28 @@
         const themeToggle = document.getElementById('themeToggle');
         const body = document.body;
 
-        themeToggle.addEventListener('click', () => {
-            body.classList.toggle('light-theme');
-        })
-        const loadCart = (userId) => {
-            window.location.href = `/users/cart/${userId}`;
+        const addToCart = (userId, productId) => {
+            fetch(`/users/addtocart/${userId}/${productId}`, { method: 'POST' })
+                .then(response => response.url)
+                .then(data => console.log(data))
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred');
+                });
         }
 
-        const getReturn=(userId)=>{
-            window.location.href=`/users/order/${userId}`
-        }
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('light-theme');
+        });
+
+        const loadCart = (userId) => {
+            window.location.href = `/users/cart/${userId}`;
+        };
+
+        const getReturn = (userId) => {
+            window.location.href = `/users/order/${userId}`;
+        };
     </script>
 </body>
 </html>

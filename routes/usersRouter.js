@@ -95,17 +95,23 @@ if(process.env.NODE_ENV==="development"){
     //-->
 
 
-    router.get('/product/:productId/:userId',async(req,res)=>{
-        try{
-            const productId=req.params.productId
-            const userId=req.params.userId
-            const product=productModel.findById(productId)
-            res.render('user-product-detail-screen',{product,userId})
-        }
-        catch(error){
-            
+   // Product detail route
+   router.get('/product/:productId/:userId', async (req, res) => {
+        try {
+            const productId = req.params.productId
+            const userId = req.params.userId
+            const user = await userModel.findById(userId)
+            const product = await productModel.findById(productId)
+            if (!product || !user) {
+                return res.status(404).send('Product or user not found')
+            }
+            res.render('user-product-detail-screen', { product, user })
+        } catch (error) {
+            console.error('Error fetching product details:', error)
+            res.status(500).send('Error loading product details')
         }
     })
+
     
 
     

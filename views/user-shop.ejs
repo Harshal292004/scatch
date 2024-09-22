@@ -53,6 +53,21 @@
     </nav>
 
     <main class="container mx-auto px-4 pt-20 pb-16">
+
+        <section class=" rounded-full mx-auto bg-secondary h-14 sm:w-[49%] md:w-[45%] lg:w-[40%] flex justify-center items-center p-2 shadow-md">
+            <div class="flex flex-row gap-2 justify-center items-center w-full">
+                <button onclick="search()" class="ms-3 me-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 transition ease-in-out duration-300 hover:-translate-y-1 hover:scale-110">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                    </svg>
+                </button>
+                <input id="searchInput" type="text" placeholder="Search..." class="ms-0 flex-grow rounded-full border-none bg-transparent px-3 py-1 outline-none text-sm">
+            </div>
+        </section>
+        
+        
+
+
         <section class="mb-8">
             <h2 class="text-2xl font-semibold mb-4">For You</h2>
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
@@ -132,6 +147,9 @@
         }
         const loadProduct=(productId,userId)=>{
             window.location.href= `/users/product/${productId}/${userId}`
+        }
+        const search=()=>{
+            console.log("seiugbosuirbg")
         }
     </script>
 </body>

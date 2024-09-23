@@ -71,7 +71,6 @@ if(process.env.NODE_ENV==="development"){
             const user = await userModel.findById(userId).populate('cart');
     
             const products = user.cart;
-    
             res.render('user-cart', {products});
         } catch (error) {
             console.error('Error fetching cart:', error);
@@ -92,27 +91,29 @@ if(process.env.NODE_ENV==="development"){
 
     })
 
+    // Product detail route
+   router.get('/product/:productId/:userId', async (req, res) => {
+    try {
+        const productId = req.params.productId
+        const userId = req.params.userId
+        const user = await userModel.findById(userId)
+        const product = await productModel.findById(productId)
+        if (!product || !user) {
+            return res.status(404).send('Product or user not found')
+        }
+        res.render('user-product-detail-screen', { product, user })
+    } catch (error) {
+        console.error('Error fetching product details:', error)
+        res.status(500).send('Error loading product details')
+    }
+    })
+
+
+
     //-->
 
 
-   // Product detail route
-   router.get('/product/:productId/:userId', async (req, res) => {
-        try {
-            const productId = req.params.productId
-            const userId = req.params.userId
-            const user = await userModel.findById(userId)
-            const product = await productModel.findById(productId)
-            if (!product || !user) {
-                return res.status(404).send('Product or user not found')
-            }
-            res.render('user-product-detail-screen', { product, user })
-        } catch (error) {
-            console.error('Error fetching product details:', error)
-            res.status(500).send('Error loading product details')
-        }
-    })
-
-    
+   
 
     
     
@@ -124,27 +125,16 @@ if(process.env.NODE_ENV==="development"){
     router.post('/placeOrder/:userId/:productId',async (req,res)=>{
         
         try{
-
             const userId=req.params.userId
-            
             const productId=req.params.productId
-
-
-
             const  user= await userModel.findOne({_id:userId})
-            
             const product = await productModel.findOne({_id:productId})
-
-
-
-            let {quantity} = req.body
-
-
+            let {quantity,addressId} = req.body
             user.order.push(productId)
-            
             await user.save()
             let totalAmount=product.price*quantity
-            let order=await orderModel.create({
+            
+            const  order=await orderModel.create({
                 user:userId,
                 product:productId,
                 quantity:quantity,
@@ -153,8 +143,11 @@ if(process.env.NODE_ENV==="development"){
                 date:Date.now()
             })
 
+            req.flash('success','order placed succesfully')
+            res.redirect(`/order/${userId}`)
         }catch(error){
-
+            console.error('Error: ',error)
+            res.redirect('/')
         }
     })
 }

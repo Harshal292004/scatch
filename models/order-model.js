@@ -6,6 +6,14 @@ const orderSchema = new mongoose.Schema({
         ref: 'user',
         required: true
     },
+    address: {
+        street: String,
+        city: String,
+        state: String,
+        postalCode: String,
+        country: String
+    }
+    ,
     product: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'product',
